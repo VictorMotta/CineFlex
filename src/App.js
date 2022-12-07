@@ -1,5 +1,7 @@
+import SelectFilme from "./components/SelectFilme";
+
 function App() {
-    return <div>APP</div>;
+    return <SelectFilme />;
 }
 
 export default App;
