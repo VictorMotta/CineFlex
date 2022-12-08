@@ -1,24 +1,30 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export default function SucessPage() {
+export default function SucessPage({ infoSucess }) {
+    console.log(infoSucess);
+    const cpfAtualizado = infoSucess.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+
     return (
         <StyledContainerSucessPage>
             <h1>Pedido feito com sucesso!</h1>
             <StyledInfoSucess>
                 <h2>Filme e sessão</h2>
-                <span>EnolaHolmes</span>
-                <span>24/06/2021 15:00</span>
+                <span>{infoSucess.movie}</span>
+                <span>
+                    {infoSucess.date} {infoSucess.horary}
+                </span>
             </StyledInfoSucess>
             <StyledInfoSucess>
                 <h2>Ingressos</h2>
-                <span>Assento 15</span>
-                <span>Assento 16</span>
+                {infoSucess.seats.map((item) => (
+                    <span>Assento {item.name}</span>
+                ))}
             </StyledInfoSucess>
             <StyledInfoSucess>
                 <h2>Comprador</h2>
-                <span>Nome: João da Silva Sauro</span>
-                <span>CPF: 123.456.789-10</span>
+                <span>Nome: {infoSucess.name}</span>
+                <span>CPF: {cpfAtualizado}</span>
             </StyledInfoSucess>
             <Link to='/'>
                 <button>Voltar pra Home</button>

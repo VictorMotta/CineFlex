@@ -5,19 +5,23 @@ import Loading from "../assets/loading-nazare.gif";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Assento from "../components/Assento";
+import {
+    CORASSENTOSELECIONADO,
+    BORDAASSENTOSELECIONADO,
+    CORASSENTODISPONIVEL,
+    BORDAASSENTODISPONIVEL,
+    CORASSENTOINDISPONIVEL,
+    BORDASSENTOINDISPONIVEL,
+} from "../constants/colors";
+import InfoComprador from "../components/InfoComprador";
 
-const CORASSENTOSELECIONADO = "#1AAE9E";
-const CORASSENTODISPONIVEL = "#C3CFD9";
-const CORASSENTOINDISPONIVEL = "#FBE192";
-const BORDAASSENTOSELECIONADO = "#0E7D71";
-const BORDAASSENTODISPONIVEL = "#7B8B99";
-const BORDASSENTOINDISPONIVEL = "#F7C52B";
-
-export default function SelectSeatsPage() {
+export default function SelectSeatsPage({ setInfoSucess }) {
     const [seats, setSeats] = useState(undefined);
     const { idSessao } = useParams();
     const [seatsSelected, setSeatsSelected] = useState([]);
-    console.log(seatsSelected);
+    const [nomeBuyer, setNomeBuyer] = useState("");
+    const [cpfBuyer, setCpfBuyer] = useState("");
+
     useEffect(() => {
         const promisse = axios.get(
             `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`
@@ -26,6 +30,40 @@ export default function SelectSeatsPage() {
         promisse.catch((res) => console.log(res.response.data));
     }, []);
 
+    console.log(seatsSelected);
+    function enviaFormulario() {
+        let lista = [];
+        for (let i = 0; i < seatsSelected.length; i++) {
+            lista.push(seatsSelected[i].id);
+        }
+
+        const listaEnviar = {
+            ids: lista,
+            name: nomeBuyer,
+            cpf: cpfBuyer,
+        };
+
+        const listaEnviaSucess = {
+            seats: seatsSelected,
+            name: nomeBuyer,
+            cpf: cpfBuyer,
+            movie: seats.movie.title,
+            horary: seats.name,
+            date: seats.day.date,
+        };
+
+        setInfoSucess(listaEnviaSucess);
+
+        // if (seatsSelected.length > 0 || !cpfBuyer || !nomeBuyer) {
+        //     const promisse = axios.post(
+        //         "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many",
+        //         listaEnviar
+        //     );
+        //     promisse.then((res) => console.log(res.data));
+        //     promisse.catch((res) => console.log(res.response.data));
+        // }
+    }
+
     if (seats === undefined) {
         return (
             <StyledLoading>
@@ -33,7 +71,7 @@ export default function SelectSeatsPage() {
             </StyledLoading>
         );
     }
-    console.log(seatsSelected);
+
     return (
         <StyledContainerSeatsPage>
             <h1>Seleciona o(s) assento(s)</h1>
@@ -70,13 +108,16 @@ export default function SelectSeatsPage() {
                     <h4>Indisponível</h4>
                 </div>
             </StyledShowCase>
-            <StyledFormPage>
-                <label>Nome do Comprador:</label>
-                <input type='text' placeholder='Digite seu Nome...' />
-                <label>CPF do Comprador:</label>
-                <input type='text' placeholder='Digite seu CPF...' />
-                <button>Reserver assento(s)</button>
-            </StyledFormPage>
+
+            <InfoComprador
+                nomeBuyer={nomeBuyer}
+                setNomeBuyer={setNomeBuyer}
+                cpfBuyer={cpfBuyer}
+                setCpfBuyer={setCpfBuyer}
+                enviaFormulario={enviaFormulario}
+                seatsSelected={seatsSelected}
+            />
+
             <SideBar image={seats.movie.posterURL}>
                 <span>{seats.movie.title}</span>
                 <span>
@@ -153,59 +194,6 @@ const StyledShowCase = styled.div`
         border-radius: 100%;
         border: 1px solid ${(props) => props.borderIndisponivel};
         background-color: ${(props) => props.corIndisponivel};
-    }
-`;
-
-const StyledFormPage = styled.form`
-    width: 90%;
-    margin-top: 52px;
-    display: flex;
-    flex-direction: column;
-    label {
-        font-family: "Roboto", sans-serif;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 21px;
-        color: #293845;
-        margin-bottom: 5px;
-    }
-    input {
-        height: 51px;
-        background-color: #fff;
-        border: 1px solid #d5d5d5;
-        border-radius: 3px;
-        margin-bottom: 20px;
-    }
-    input::placeholder {
-        font-family: "Roboto", sans-serif;
-        font-style: italic;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 21px;
-        color: #afafaf;
-        padding-left: 18px;
-    }
-    button {
-        width: 70%;
-        height: 42px;
-        background-color: #e8833a;
-        border-radius: 3px;
-        border: none;
-        font-family: "Roboto", sans-serif;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 21px;
-        letter-spacing: 0.04em;
-        color: #fff;
-        margin: 0 auto;
-        margin-top: 57px;
-        margin-bottom: 100px;
-        transition: 0.5s;
-    }
-    button:hover {
-        background-color: #fff;
-        color: #e8833a;
-        border: 1px solid #e8833a;
     }
 `;
 

@@ -12,42 +12,6 @@ import {
 export default function Assento({ item, chooseSeat, seatsSelected, setSeatsSelected }) {
     const { id, name, isAvailable } = item;
 
-    // function mostraCorreto() {
-    //     if (item.isAvailable === false) {
-    //         return (
-    //             <StyledAssento
-    //                 cor={CORASSENTOINDISPONIVEL}
-    //                 corBorda={BORDASSENTOINDISPONIVEL}
-    //                 onClick={() => chooseSeat(item)}
-    //             >
-    //                 {name}
-    //             </StyledAssento>
-    //         );
-    //     }
-    //     if (item.isAvailable === true && (item.selected === false || item.selected === undefined)) {
-    //         return (
-    //             <StyledAssento
-    //                 cor={CORASSENTODISPONIVEL}
-    //                 corBorda={BORDAASSENTODISPONIVEL}
-    //                 onClick={() => chooseSeat(item)}
-    //             >
-    //                 {name}
-    //             </StyledAssento>
-    //         );
-    //     }
-    //     if (item.selected === true) {
-    //         return (
-    // <StyledAssento
-    //     cor={CORASSENTOSELECIONADO}
-    //     corBorda={BORDAASSENTOSELECIONADO}
-    //     onClick={() => chooseSeat(item)}
-    // >
-    //     {name}
-    // </StyledAssento>
-    //         );
-    //     }
-    // }
-
     function chooseSeat(seat) {
         if (seat.isAvailable === false) {
             return;
