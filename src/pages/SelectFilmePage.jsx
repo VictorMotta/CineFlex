@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import CardFilme from "../components/CardFilme";
 import Loading from "../assets/loading.gif";
-
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -28,8 +27,8 @@ export default function SelectFilmePage() {
             <h1>Selecione o filme</h1>
             <div>
                 {filmes.map((item) => (
-                    <Link to={`/sessoes/${item.id}`}>
-                        <CardFilme key={item.id} item={item} />
+                    <Link key={item.id} to={`/sessoes/${item.id}`}>
+                        <CardFilme item={item} />
                     </Link>
                 ))}
             </div>

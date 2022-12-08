@@ -1,7 +1,9 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export default function Session({ item }) {
     const { weekday, date, showtimes } = item;
+
     return (
         <StyledSession>
             <h1>
@@ -9,7 +11,9 @@ export default function Session({ item }) {
             </h1>
             <div>
                 {showtimes.map((item) => (
-                    <button key={item.id}>{item.name}</button>
+                    <Link key={item.id} to={`/assentos/${item.id}`}>
+                        <button>{item.name}</button>
+                    </Link>
                 ))}
             </div>
         </StyledSession>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import Session from "../components/Session";
@@ -17,7 +17,6 @@ export default function SelectSessionPage() {
         promisse.then((res) => setSelectFilm(res.data));
         promisse.catch((res) => console.log(res.response.data));
     }, []);
-    console.log(selectFilme);
 
     if (selectFilme === undefined) {
         return (
@@ -31,7 +30,7 @@ export default function SelectSessionPage() {
         <StyledContainerSessions>
             <h1>Selecione o horário</h1>
             {selectFilme.days.map((item) => (
-                <Session item={item} />
+                <Session key={item.id} item={item} />
             ))}
             <SideBar image={selectFilme.posterURL}>
                 <h1>{selectFilme.title}</h1>
