@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function SucessPage() {
@@ -19,7 +20,9 @@ export default function SucessPage() {
                 <span>Nome: João da Silva Sauro</span>
                 <span>CPF: 123.456.789-10</span>
             </StyledInfoSucess>
-            <button>Voltar pra Home</button>
+            <Link to='/'>
+                <button>Voltar pra Home</button>
+            </Link>
         </StyledContainerSucessPage>
     );
 }
@@ -42,8 +45,14 @@ const StyledContainerSucessPage = styled.div`
         word-wrap: break-word;
         text-align: center;
     }
-    button {
+    a {
         width: 60%;
+        height: 42px;
+        text-decoration: none;
+    }
+
+    button {
+        width: 100%;
         height: 42px;
         background: #e8833a;
         border-radius: 3px;
@@ -56,7 +65,7 @@ const StyledContainerSucessPage = styled.div`
         transition: 0.5s;
         cursor: pointer;
     }
-    button:hover {
+    a button:hover {
         background: #fff;
         color: #e8833a;
         border: 1px solid #e8833a;

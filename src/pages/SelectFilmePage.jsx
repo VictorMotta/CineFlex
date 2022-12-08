@@ -4,6 +4,7 @@ import CardFilme from "../components/CardFilme";
 import Loading from "../assets/loading.gif";
 
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function SelectFilmePage() {
     const [filmes, setFilmes] = useState(undefined);
@@ -27,7 +28,9 @@ export default function SelectFilmePage() {
             <h1>Selecione o filme</h1>
             <div>
                 {filmes.map((item) => (
-                    <CardFilme key={item.id} item={item} />
+                    <Link to={`/sessoes/${item.id}`}>
+                        <CardFilme key={item.id} item={item} />
+                    </Link>
                 ))}
             </div>
         </StyledContainerMain>

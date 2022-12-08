@@ -1,7 +1,12 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Menu() {
-    return <StyledContainerTop>CINEFLEX</StyledContainerTop>;
+    return (
+        <StyledContainerTop>
+            <Link to='/'>CINEFLEX</Link>
+        </StyledContainerTop>
+    );
 }
 
 const StyledContainerTop = styled.div`
@@ -15,4 +20,8 @@ const StyledContainerTop = styled.div`
     font-weight: 400;
     font-size: 34px;
     font-family: "Roboto", sans-serif;
+    a {
+        text-decoration: none;
+        color: #e8833a;
+    }
 `;
