@@ -14,6 +14,7 @@ export default function Assento({ item, chooseSeat, seatsSelected, setSeatsSelec
 
     function chooseSeat(seat) {
         if (seat.isAvailable === false) {
+            alert("Esse assento não está disponível!");
             return;
         }
 
@@ -77,4 +78,5 @@ const StyledAssento = styled.li`
     font-size: 11px;
     line-height: 13px;
     letter-spacing: 0.04em;
+    cursor: pointer;
 `;

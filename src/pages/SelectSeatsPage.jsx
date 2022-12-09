@@ -3,7 +3,7 @@ import styled from "styled-components";
 import SideBar from "../components/SideBar";
 import Loading from "../assets/loading-nazare.gif";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Assento from "../components/Assento";
 import {
     CORASSENTOSELECIONADO,
@@ -21,6 +21,7 @@ export default function SelectSeatsPage({ setInfoSucess }) {
     const [seatsSelected, setSeatsSelected] = useState([]);
     const [nomeBuyer, setNomeBuyer] = useState("");
     const [cpfBuyer, setCpfBuyer] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         const promisse = axios.get(
@@ -30,8 +31,8 @@ export default function SelectSeatsPage({ setInfoSucess }) {
         promisse.catch((res) => console.log(res.response.data));
     }, []);
 
-    console.log(seatsSelected);
-    function enviaFormulario() {
+    function enviaFormulario(e) {
+        e.preventDefault();
         let lista = [];
         for (let i = 0; i < seatsSelected.length; i++) {
             lista.push(seatsSelected[i].id);
@@ -54,14 +55,27 @@ export default function SelectSeatsPage({ setInfoSucess }) {
 
         setInfoSucess(listaEnviaSucess);
 
-        // if (seatsSelected.length > 0 || !cpfBuyer || !nomeBuyer) {
-        //     const promisse = axios.post(
-        //         "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many",
-        //         listaEnviar
-        //     );
-        //     promisse.then((res) => console.log(res.data));
-        //     promisse.catch((res) => console.log(res.response.data));
-        // }
+        if (seatsSelected.length === 0) {
+            alert("Selecione pelo menos 1 assento!");
+            return;
+        }
+
+        if (cpfBuyer.length < 11 || cpfBuyer.length > 11) {
+            alert("Digite o cpf sem traços e pontos!");
+            return;
+        }
+
+        const promisse = axios.post(
+            "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many",
+            listaEnviar
+        );
+        promisse.then((res) => {
+            console.log(res.data);
+            setNomeBuyer("");
+            setCpfBuyer("");
+            navigate("/sucesso");
+        });
+        promisse.catch((res) => console.log(res.response.data));
     }
 
     if (seats === undefined) {
@@ -115,7 +129,6 @@ export default function SelectSeatsPage({ setInfoSucess }) {
                 cpfBuyer={cpfBuyer}
                 setCpfBuyer={setCpfBuyer}
                 enviaFormulario={enviaFormulario}
-                seatsSelected={seatsSelected}
             />
 
             <SideBar image={seats.movie.posterURL}>

@@ -7,21 +7,22 @@ export default function InfoComprador({
     cpfBuyer,
     setCpfBuyer,
     enviaFormulario,
-    seatsSelected,
 }) {
     return (
         <>
-            <StyledFormPage>
-                <label>Nome do Comprador:</label>
+            <StyledFormPage onSubmit={enviaFormulario}>
+                <label htmlFor='nome'>Nome do Comprador:</label>
                 <input
+                    id='nome'
                     type='text'
                     placeholder='Digite seu Nome...'
                     onChange={(e) => setNomeBuyer(e.target.value)}
                     value={nomeBuyer}
                     required
                 />
-                <label>CPF do Comprador:</label>
+                <label htmlFor='cpf'>CPF do Comprador:</label>
                 <input
+                    id='cpf'
                     type='number'
                     placeholder='Digite seu CPF...'
                     onChange={(e) => setCpfBuyer(e.target.value)}
@@ -30,15 +31,8 @@ export default function InfoComprador({
                     maxLength='11'
                     required
                 />
-                <Link
-                    to={
-                        nomeBuyer && cpfBuyer && cpfBuyer.length === 11 && seatsSelected.length > 0
-                            ? "/sucesso"
-                            : null
-                    }
-                >
-                    <button onClick={enviaFormulario}>Reserver assento(s)</button>
-                </Link>
+
+                <button>Reserver assento(s)</button>
             </StyledFormPage>
         </>
     );
@@ -95,6 +89,7 @@ const StyledFormPage = styled.form`
         margin-top: 57px;
         margin-bottom: 100px;
         transition: 0.5s;
+        cursor: pointer;
     }
     button:hover {
         background-color: #fff;
