@@ -3,7 +3,7 @@ import styled from "styled-components";
 export default function CardFilme({ item }) {
     const { posterURL, title } = item;
     return (
-        <StyledContainerImage>
+        <StyledContainerImage data-test='movie'>
             <img src={posterURL} alt={title} />
         </StyledContainerImage>
     );

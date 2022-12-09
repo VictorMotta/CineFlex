@@ -13,6 +13,7 @@ export default function InfoComprador({
             <StyledFormPage onSubmit={enviaFormulario}>
                 <label htmlFor='nome'>Nome do Comprador:</label>
                 <input
+                    data-test='client-name'
                     id='nome'
                     type='text'
                     placeholder='Digite seu Nome...'
@@ -22,6 +23,7 @@ export default function InfoComprador({
                 />
                 <label htmlFor='cpf'>CPF do Comprador:</label>
                 <input
+                    data-test='client-cpf'
                     id='cpf'
                     type='number'
                     placeholder='Digite seu CPF...'
@@ -32,7 +34,7 @@ export default function InfoComprador({
                     required
                 />
 
-                <button>Reserver assento(s)</button>
+                <button data-test='book-seat-btn'>Reserver assento(s)</button>
             </StyledFormPage>
         </>
     );

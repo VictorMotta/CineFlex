@@ -34,6 +34,7 @@ export default function Assento({ item, chooseSeat, seatsSelected, setSeatsSelec
         <>
             {item.isAvailable === false ? (
                 <StyledAssento
+                    data-test='seat'
                     cor={CORASSENTOINDISPONIVEL}
                     corBorda={BORDASSENTOINDISPONIVEL}
                     onClick={() => chooseSeat(item)}
@@ -42,6 +43,7 @@ export default function Assento({ item, chooseSeat, seatsSelected, setSeatsSelec
                 </StyledAssento>
             ) : !item.selected ? (
                 <StyledAssento
+                    data-test='seat'
                     cor={CORASSENTODISPONIVEL}
                     corBorda={BORDAASSENTODISPONIVEL}
                     onClick={() => chooseSeat(item)}
@@ -50,6 +52,7 @@ export default function Assento({ item, chooseSeat, seatsSelected, setSeatsSelec
                 </StyledAssento>
             ) : (
                 <StyledAssento
+                    data-test='seat'
                     cor={CORASSENTOSELECIONADO}
                     corBorda={BORDAASSENTOSELECIONADO}
                     onClick={() => chooseSeat(item)}

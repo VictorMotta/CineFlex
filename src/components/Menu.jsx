@@ -6,7 +6,7 @@ export default function Menu({ rotaHome }) {
     return (
         <StyledContainerTop>
             {!rotaHome && (
-                <button onClick={() => navigate(-1)}>
+                <button data-test='go-home-header-btn' onClick={() => navigate(-1)}>
                     <ion-icon name='arrow-back-outline'></ion-icon>
                 </button>
             )}

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export default function SideBar({ image, nome, children }) {
     return (
-        <StyledContainerSideBar>
+        <StyledContainerSideBar data-test='footer'>
             <div>
                 <img src={image} alt={nome} />
             </div>

@@ -12,25 +12,25 @@ export default function SucessPage({ infoSucess, setRotaHome }) {
     return (
         <StyledContainerSucessPage>
             <h1>Pedido feito com sucesso!</h1>
-            <StyledInfoSucess>
+            <StyledInfoSucess data-test='movie-info'>
                 <h2>Filme e sessão</h2>
                 <span>{infoSucess.movie}</span>
                 <span>
                     {infoSucess.date} {infoSucess.horary}
                 </span>
             </StyledInfoSucess>
-            <StyledInfoSucess>
+            <StyledInfoSucess data-test='seats-info'>
                 <h2>Ingressos</h2>
                 {infoSucess.seats.map((item) => (
                     <span key={item.id}>Assento {item.name}</span>
                 ))}
             </StyledInfoSucess>
-            <StyledInfoSucess>
+            <StyledInfoSucess data-test='client-info'>
                 <h2>Comprador</h2>
                 <span>Nome: {infoSucess.name}</span>
                 <span>CPF: {cpfAtualizado}</span>
             </StyledInfoSucess>
-            <Link to='/'>
+            <Link data-test='go-home-btn' to='/'>
                 <button>Voltar pra Home</button>
             </Link>
         </StyledContainerSucessPage>

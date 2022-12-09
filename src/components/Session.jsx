@@ -5,14 +5,14 @@ export default function Session({ item }) {
     const { weekday, date, showtimes } = item;
 
     return (
-        <StyledSession>
+        <StyledSession data-test='movie-day'>
             <h1>
                 {weekday} - {date}
             </h1>
             <div>
                 {showtimes.map((item) => (
                     <Link key={item.id} to={`/assentos/${item.id}`}>
-                        <button>{item.name}</button>
+                        <button data-test='showtime'>{item.name}</button>
                     </Link>
                 ))}
             </div>
