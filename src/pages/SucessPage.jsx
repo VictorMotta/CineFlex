@@ -1,8 +1,12 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export default function SucessPage({ infoSucess }) {
-    console.log(infoSucess);
+export default function SucessPage({ infoSucess, setRotaHome }) {
+    useEffect(() => {
+        setRotaHome(true);
+    }, []);
+
     const cpfAtualizado = infoSucess.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
 
     return (
@@ -18,7 +22,7 @@ export default function SucessPage({ infoSucess }) {
             <StyledInfoSucess>
                 <h2>Ingressos</h2>
                 {infoSucess.seats.map((item) => (
-                    <span>Assento {item.name}</span>
+                    <span key={item.id}>Assento {item.name}</span>
                 ))}
             </StyledInfoSucess>
             <StyledInfoSucess>

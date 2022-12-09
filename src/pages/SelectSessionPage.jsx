@@ -6,11 +6,12 @@ import Session from "../components/Session";
 import SideBar from "../components/SideBar";
 import Loading from "../assets/loading-shrek.gif";
 
-export default function SelectSessionPage() {
+export default function SelectSessionPage({ setRotaHome }) {
     const [selectFilme, setSelectFilm] = useState(undefined);
     const { idFilme } = useParams();
 
     useEffect(() => {
+        setRotaHome(false);
         const promisse = axios.get(
             `https://mock-api.driven.com.br/api/v8/cineflex/movies/${idFilme}/showtimes`
         );

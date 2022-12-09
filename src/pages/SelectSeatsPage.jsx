@@ -15,7 +15,7 @@ import {
 } from "../constants/colors";
 import InfoComprador from "../components/InfoComprador";
 
-export default function SelectSeatsPage({ setInfoSucess }) {
+export default function SelectSeatsPage({ setInfoSucess, setRotaHome }) {
     const [seats, setSeats] = useState(undefined);
     const { idSessao } = useParams();
     const [seatsSelected, setSeatsSelected] = useState([]);
@@ -24,6 +24,7 @@ export default function SelectSeatsPage({ setInfoSucess }) {
     const navigate = useNavigate();
 
     useEffect(() => {
+        setRotaHome(false);
         const promisse = axios.get(
             `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`
         );

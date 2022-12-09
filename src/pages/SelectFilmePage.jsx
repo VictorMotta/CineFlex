@@ -5,10 +5,11 @@ import Loading from "../assets/loading.gif";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-export default function SelectFilmePage() {
+export default function SelectFilmePage({ setRotaHome }) {
     const [filmes, setFilmes] = useState(undefined);
 
     useEffect(() => {
+        setRotaHome(true);
         const promisse = axios.get("https://mock-api.driven.com.br/api/v8/cineflex/movies");
         promisse.then((res) => setFilmes(res.data));
         promisse.catch((res) => console.log(res.response.data));
