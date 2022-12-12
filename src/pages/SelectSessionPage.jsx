@@ -4,7 +4,7 @@ import axios from "axios";
 import styled from "styled-components";
 import Session from "../components/Session";
 import SideBar from "../components/SideBar";
-import Loading from "../assets/loading-shrek.gif";
+import Loading from "../assets/loading-girando.gif";
 
 export default function SelectSessionPage({ setRotaHome }) {
     const [selectFilme, setSelectFilm] = useState(undefined);

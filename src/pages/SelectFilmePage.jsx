@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import CardFilme from "../components/CardFilme";
-import Loading from "../assets/loading.gif";
+import Loading from "../assets/loading-girando.gif";
 import axios from "axios";
 import { Link } from "react-router-dom";
 

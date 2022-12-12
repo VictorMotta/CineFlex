@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import SideBar from "../components/SideBar";
-import Loading from "../assets/loading-nazare.gif";
+import Loading from "../assets/loading-girando.gif";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import Assento from "../components/Assento";
