@@ -19,8 +19,7 @@ export default function SelectSeatsPage({ setInfoSucess, setRotaHome }) {
     const [seats, setSeats] = useState(undefined);
     const { idSessao } = useParams();
     const [seatsSelected, setSeatsSelected] = useState([]);
-    const [nomeBuyer, setNomeBuyer] = useState("");
-    const [cpfBuyer, setCpfBuyer] = useState("");
+    const [form, setForm] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -34,49 +33,48 @@ export default function SelectSeatsPage({ setInfoSucess, setRotaHome }) {
 
     function enviaFormulario(e) {
         e.preventDefault();
-        let lista = [];
-        for (let i = 0; i < seatsSelected.length; i++) {
-            lista.push(seatsSelected[i].id);
-        }
+        const lista = seatsSelected.map((s) => s.id);
 
-        const listaEnviar = {
+        const body = {
             ids: lista,
-            name: nomeBuyer,
-            cpf: cpfBuyer,
+            compradores: seatsSelected.map((seat) => {
+                return {
+                    idAssento: seat.id,
+                    nome: form[`name${seat.name}`],
+                    cpf: form[`cpf${seat.name}`],
+                };
+            }),
         };
 
-        const listaEnviaSucess = {
-            seats: seatsSelected,
-            name: nomeBuyer,
-            cpf: cpfBuyer,
-            movie: seats.movie.title,
-            horary: seats.name,
-            date: seats.day.date,
-        };
-
-        setInfoSucess(listaEnviaSucess);
+        console.log(body);
 
         if (seatsSelected.length === 0) {
             alert("Selecione pelo menos 1 assento!");
             return;
+        } else {
+            const promisse = axios.post(
+                "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many",
+                body
+            );
+            promisse.then((res) => {
+                console.log(res.data);
+                setInfoSucess({
+                    seats: seatsSelected,
+                    movie: seats.movie.title,
+                    horary: seats.name,
+                    date: seats.day.date,
+                    buyers: seatsSelected.map((seat) => {
+                        return {
+                            seatName: seat.name,
+                            name: form[`name${seat.name}`],
+                            cpf: form[`cpf${seat.name}`],
+                        };
+                    }),
+                });
+                navigate("/sucesso");
+            });
+            promisse.catch((res) => console.log(res.response.data));
         }
-
-        if (cpfBuyer.length < 11 || cpfBuyer.length > 11) {
-            alert("Digite o cpf sem traços e pontos!");
-            return;
-        }
-
-        const promisse = axios.post(
-            "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many",
-            listaEnviar
-        );
-        promisse.then((res) => {
-            console.log(res.data);
-            setNomeBuyer("");
-            setCpfBuyer("");
-            navigate("/sucesso");
-        });
-        promisse.catch((res) => console.log(res.response.data));
     }
 
     if (seats === undefined) {
@@ -98,6 +96,8 @@ export default function SelectSeatsPage({ setInfoSucess, setRotaHome }) {
                             item={item}
                             seatsSelected={seatsSelected}
                             setSeatsSelected={setSeatsSelected}
+                            form={form}
+                            setForm={setForm}
                         />
                     ))}
                 </ul>
@@ -125,11 +125,10 @@ export default function SelectSeatsPage({ setInfoSucess, setRotaHome }) {
             </StyledShowCase>
 
             <InfoComprador
-                nomeBuyer={nomeBuyer}
-                setNomeBuyer={setNomeBuyer}
-                cpfBuyer={cpfBuyer}
-                setCpfBuyer={setCpfBuyer}
                 enviaFormulario={enviaFormulario}
+                seatsSelected={seatsSelected}
+                form={form}
+                setForm={setForm}
             />
 
             <SideBar image={seats.movie.posterURL}>

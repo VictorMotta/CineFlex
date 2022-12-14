@@ -9,7 +9,14 @@ import {
     BORDASSENTOINDISPONIVEL,
 } from "../constants/colors";
 
-export default function Assento({ item, chooseSeat, seatsSelected, setSeatsSelected }) {
+export default function Assento({
+    item,
+    chooseSeat,
+    seatsSelected,
+    setSeatsSelected,
+    form,
+    setForm,
+}) {
     const { id, name, isAvailable } = item;
 
     function chooseSeat(seat) {
@@ -21,9 +28,20 @@ export default function Assento({ item, chooseSeat, seatsSelected, setSeatsSelec
         seat.selected = !seat.selected;
 
         if (!seat.selected) {
-            const filterSeats = seatsSelected.filter((item) => !(item.id === seat.id));
-            setSeatsSelected([...filterSeats]);
-            return;
+            const unselect = window.confirm("Tem certeza que quer retirar esse assento?");
+
+            if (unselect) {
+                const filterSeats = seatsSelected.filter((item) => !(item.id === seat.id));
+                setSeatsSelected(filterSeats);
+
+                const newForm = { ...form };
+
+                delete newForm[`name${seat.name}`];
+                delete newForm[`cpf${seat.name}`];
+                setForm(newForm);
+
+                return;
+            }
         }
 
         setSeatsSelected([...seatsSelected, seat]);

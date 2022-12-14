@@ -7,8 +7,6 @@ export default function SucessPage({ infoSucess, setRotaHome }) {
         setRotaHome(true);
     }, []);
 
-    const cpfAtualizado = infoSucess.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
-
     return (
         <StyledContainerSucessPage>
             <h1>Pedido feito com sucesso!</h1>
@@ -26,9 +24,15 @@ export default function SucessPage({ infoSucess, setRotaHome }) {
                 ))}
             </StyledInfoSucess>
             <StyledInfoSucess data-test='client-info'>
-                <h2>Comprador</h2>
-                <span>Nome: {infoSucess.name}</span>
-                <span>CPF: {cpfAtualizado}</span>
+                {infoSucess.buyers.map((buyer) => (
+                    <div key={buyer.name}>
+                        <h2>Comprador Assento {buyer.seatName}</h2>
+                        <span>Nome: {buyer.name}</span>
+                        <span>
+                            CPF: {buyer.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")}
+                        </span>
+                    </div>
+                ))}
             </StyledInfoSucess>
             <Link data-test='go-home-btn' to='/'>
                 <button>Voltar pra Home</button>
@@ -43,6 +47,12 @@ const StyledContainerSucessPage = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    div {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
     h1 {
         width: 50%;
         font-family: "Roboto", sans-serif;

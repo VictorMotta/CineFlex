@@ -1,40 +1,44 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export default function InfoComprador({
-    nomeBuyer,
-    setNomeBuyer,
-    cpfBuyer,
-    setCpfBuyer,
-    enviaFormulario,
-}) {
+export default function InfoComprador({ enviaFormulario, seatsSelected, form, setForm }) {
+    function handleForm(e) {
+        const { value, name } = e.target;
+        setForm({ ...form, [name]: value });
+    }
+
     return (
         <>
             <StyledFormPage onSubmit={enviaFormulario}>
-                <label htmlFor='nome'>Nome do Comprador:</label>
-                <input
-                    data-test='client-name'
-                    id='nome'
-                    type='text'
-                    placeholder='Digite seu Nome...'
-                    onChange={(e) => setNomeBuyer(e.target.value)}
-                    value={nomeBuyer}
-                    required
-                />
-                <label htmlFor='cpf'>CPF do Comprador:</label>
-                <input
-                    data-test='client-cpf'
-                    id='cpf'
-                    type='text'
-                    name='cpf'
-                    pattern='(\d{3}\.?\d{3}\.?\d{3}-?\d{2})|(\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2})'
-                    placeholder='Digite seu CPF...'
-                    onChange={(e) => setCpfBuyer(e.target.value)}
-                    value={cpfBuyer}
-                    minLength='11'
-                    maxLength='11'
-                    required
-                />
+                {seatsSelected.map((seat) => (
+                    <div key={seat.id}>
+                        <label htmlFor='nome'>Nome do Comprador {seat.name}:</label>
+                        <input
+                            data-test='client-name'
+                            id='nome'
+                            name={`name${seat.name}`}
+                            type='text'
+                            placeholder='Digite seu Nome...'
+                            onChange={handleForm}
+                            value={form[`name${seat.name}`]}
+                            required
+                        />
+                        <label htmlFor='cpf'>CPF do Comprador {seat.name}:</label>
+                        <input
+                            data-test='client-cpf'
+                            id='cpf'
+                            type='text'
+                            name={`cpf${seat.name}`}
+                            pattern='(\d{3}\.?\d{3}\.?\d{3}-?\d{2})|(\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2})'
+                            placeholder='Digite seu CPF...'
+                            onChange={handleForm}
+                            value={form[`cpf${seat.name}`]}
+                            minLength='11'
+                            maxLength='11'
+                            required
+                        />
+                    </div>
+                ))}
 
                 <button data-test='book-seat-btn'>Reserver assento(s)</button>
             </StyledFormPage>
@@ -47,6 +51,11 @@ const StyledFormPage = styled.form`
     margin-top: 52px;
     display: flex;
     flex-direction: column;
+    div {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
     label {
         font-family: "Roboto", sans-serif;
         font-weight: 400;
